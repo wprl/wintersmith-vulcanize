@@ -1,24 +1,21 @@
 // ## Dependencies
 var vulcanize = require('vulcanize');
-var through = require('through');
 var deco = require('deco');
-// ## Private Module Members
-function bufferIt () {
-  var buffer = '';
-  return through(
-    function (chunk) { buffer += chunk },
-    function () { 
+var fs = require('fs');
+// ## Module Definition 
+var plugin = module.exports = function (env, callback) {
+  var defaults = {};
+  var options = deco.merge(defaults, env.config.vulcanize);  
+  var VulcanizePlugin = deco().inherit(ContentPlugin);
+
+  VulcanizePlugin.prototype.getView = function() {
+    return function (env, locals, contents, templates, callback) {
       vulcanize.setOptions(options);
-      var out = vulcanize.processDocument(buffer); // set in options TODO
-      this.queue(out);
-      this.queue(null);
-    }
-  );  
-}
-// ## Module Definition
-var plugin = module.exports = function (file, options) {
-  if (!html) return;
-  options = deco.merge({}, options);
-  vulcanize.setOptions(options);
-  return bufferIt().pipe(vulcanizeIt());
-}
+      callback(null, vulcanize.processDocument());
+    };
+  };
+
+  return VulcanizePlugin;
+};
+
+env.registerContentPlugin('scripts', '**/*.html', VulcanizePlugin);

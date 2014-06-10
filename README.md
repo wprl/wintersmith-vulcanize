@@ -1,4 +1,4 @@
 vulcanizify
 ===========
 
-(Broken.)  This is a code sketch of how a browserify transform/plugin might work with vulcanize.  
+(Broken.)  This is a code sketch of how a wintersmith plugin might work with vulcanize.  
