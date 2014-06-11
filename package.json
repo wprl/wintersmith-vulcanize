@@ -1,6 +1,6 @@
 {
   "name": "wintersmith-vulcanize",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "(Broken) Vulcanize transform for browserify",
   "main": "index.js",
   "scripts": {
